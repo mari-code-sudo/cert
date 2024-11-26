@@ -5,7 +5,7 @@ on:
 jobs:
   renew_ssl_test:
     name: 'Renew SSL Certificates test'
-    runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]    
+    runs-on: [self-hosted, linux, x64]    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

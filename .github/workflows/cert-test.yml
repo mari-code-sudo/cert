@@ -4,7 +4,7 @@ on:
     - cron: '0 2 * * *'
 jobs:
   renew_ssl_test:
-    name: 'Renew SSL Certificates'
+    name: 'Renew SSL Certificates test'
     runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]    
     steps:
       - name: Checkout code
@@ -41,7 +41,7 @@ jobs:
           ./.github/workflows/cert-validation-renewal.sh'
 
   renew_ssl_dev:
-    name: 'Renew SSL Certificates'
+    name: 'Renew SSL Certificates dev'
     runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]    
     steps:
       - name: Checkout code
@@ -78,7 +78,7 @@ jobs:
           ./.github/workflows/cert-validation-renewal.sh'
 
   renew_ssl_acc:
-    name: 'Renew SSL Certificates'
+    name: 'Renew SSL Certificates acc'
     runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]    
     steps:
       - name: Checkout code
@@ -115,7 +115,7 @@ jobs:
           ./.github/workflows/cert-validation-renewal.sh'
 
   renew_ssl_prod:
-    name: 'Renew SSL Certificates'
+    name: 'Renew SSL Certificates prod'
     runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]    
     steps:
       - name: Checkout code

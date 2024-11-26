@@ -1,7 +1,7 @@
 name: 'SSL Certificate Renewal Pipeline Deploy Workflow'
 on:
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '*/5 * * * *'
 jobs:
   renew_ssl_test:
     name: 'Renew SSL Certificates test'

@@ -1,36 +1,153 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the workflow will run
+name: 'SSL Certificate Renewal Pipeline Deploy Workflow'
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  schedule:
+    - cron: '0 2 * * *'
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  renew_ssl_test:
+    name: 'Renew SSL Certificates'
+    runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]    
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Install Certbot
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          sudo apt-get update
+          sudo apt-get install -y certbot
+
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+      
+      - name: Install openssl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openssl
+
+      - name: Renew Certificate for test
+        env:
+            container_name: "${{ secrets.container_name }}"
+            account_key: "${{ secrets.account_key }}"
+            account_name: "${{ secrets.account_name }}"
+            emails: "${{ secrets.emails }}"
+            hostname: "${{ secrets.hostname }}"
+            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+            repo: "${{ secrets.repo }}"
+            environmentname: 'test'
+        run: |
+          chmod +x  ./.github/workflows/cert-validation-renewal.sh
+          ./.github/workflows/cert-validation-renewal.sh'
+
+  renew_ssl_dev:
+    name: 'Renew SSL Certificates'
+    runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Certbot
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y certbot
+
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+      
+      - name: Install openssl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openssl
+
+      - name: Renew Certificate for test
+        env:
+            container_name: "${{ secrets.container_name }}"
+            account_key: "${{ secrets.account_key }}"
+            account_name: "${{ secrets.account_name }}"
+            emails: "${{ secrets.emails }}"
+            hostname: "${{ secrets.hostname }}"
+            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+            repo: "${{ secrets.repo }}"
+            environmentname: 'dev'
+        run: |
+          chmod +x  ./.github/workflows/cert-validation-renewal.sh
+          ./.github/workflows/cert-validation-renewal.sh'
+
+  renew_ssl_acc:
+    name: 'Renew SSL Certificates'
+    runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Certbot
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y certbot
+
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+      
+      - name: Install openssl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openssl
+
+      - name: Renew Certificate for test
+        env:
+            container_name: "${{ secrets.container_name }}"
+            account_key: "${{ secrets.account_key }}"
+            account_name: "${{ secrets.account_name }}"
+            emails: "${{ secrets.emails }}"
+            hostname: "${{ secrets.hostname }}"
+            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+            repo: "${{ secrets.repo }}"
+            environmentname: 'acc'
+        run: |
+          chmod +x  ./.github/workflows/cert-validation-renewal.sh
+          ./.github/workflows/cert-validation-renewal.sh'
+
+  renew_ssl_prod:
+    name: 'Renew SSL Certificates'
+    runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Certbot
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y certbot
+
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+      
+      - name: Install openssl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openssl
+
+      - name: Renew Certificate for test
+        env:
+            container_name: "${{ secrets.container_name }}"
+            account_key: "${{ secrets.account_key }}"
+            account_name: "${{ secrets.account_name }}"
+            emails: "${{ secrets.emails }}"
+            hostname: "${{ secrets.hostname }}"
+            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+            repo: "${{ secrets.repo }}"
+            environmentname: 'test'
+        run: |
+          chmod +x  ./.github/workflows/cert-validation-renewal.sh
+          ./.github/workflows/cert-validation-renewal.sh'
+        
